@@ -17,18 +17,21 @@ void timedBlink(int temp)
 
 void loop() {
   // put your main code here, to run repeatedly:
-  timedBlink(interval);
-  
-  if(interval == 250)
-  {
-    interval = 500;
-  }
-  else if(interval == 500)
-  {
-    interval = 1000;
-  }
-  else if(interval == 1000)
-  {
-    interval = 250;
-  }
+  int frequency = 100;
+  for(int i=0;i<101;i++)
+    dimmer(frequency,i);
+  for(int i=100;i>-1;i--)
+    dimmer(frequency,i);
+}
+
+void dimmer(int freq, int duty)
+{
+  int period, onTime, offTime;
+  period = 1000/freq;
+  onTime = period * duty / 100;
+  offTime = period - onTime;
+  digitalWrite(LED_PIN, HIGH);
+  delay(onTime);
+  digitalWrite(LED_PIN, LOW);
+  delay(offTime);
 }
